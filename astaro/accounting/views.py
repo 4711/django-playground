@@ -13,7 +13,7 @@ def dashboard(request):
     return render_to_response('dashboard.html', context)
 
 
-def calculated_traffic_list(request, logday=''):
+def calculated_traffic_index(request, logday=''):
     import datetime
 
     DATEFMT = '%Y-%m-%d'
@@ -39,7 +39,7 @@ def calculated_traffic_list(request, logday=''):
     return render_to_response('accounting/calculated_traffic_list.html', context)
 
 
-def traffic_list(request, logday=''):
+def traffic_index(request, logday=''):
     import datetime
 
     DATEFMT = '%Y-%m-%d'
@@ -65,7 +65,7 @@ def traffic_list(request, logday=''):
     return render_to_response('accounting/traffic_list.html', context)
 
 
-def login_list(request):
+def login_index(request):
     context = {}
     context['nav_name'] = 'logins'
     context['login_tot'] = Authorization.objects.count()
