@@ -4,11 +4,13 @@ from models import Authorization, Traffic, CalculatedTraffic
 
 
 def dashboard(request):
-    login_tot = Authorization.objects.count()
-    login_ok = Authorization.objects.filter(authresult='ok').count()
-    login_fail = login_tot - login_ok
+    context = {}
+    context['nav_name'] = 'dashboard'
+    context['login_tot'] = Authorization.objects.count()
+    context['login_ok'] = Authorization.objects.filter(authresult='ok').count()
+    context['login_fail'] = context['login_tot'] - context['login_ok']
 
-    return render_to_response('dashboard.html', {'login_list': login_list, 'login_ok': login_ok, 'login_fail': login_fail, 'nav_name': 'dashboard'})
+    return render_to_response('dashboard.html', context)
 
 
 def calculated_traffic_list(request, logday=''):
@@ -16,17 +18,25 @@ def calculated_traffic_list(request, logday=''):
 
     DATEFMT = '%Y-%m-%d'
 
+    context = {}
+    context['nav_name'] = 'traffic_by_net'
+
     if not logday or logday == 'today':
-        logday = datetime.datetime.today().strftime(DATEFMT)
+        context['logday'] = datetime.datetime.today()
     elif logday == 'yesterday':
-        logday = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime(DATEFMT)
+        context['logday'] = datetime.datetime.today() - datetime.timedelta(days=1)
+    else:
+        context['logday'] = datetime.datetime.strptime(logday, DATEFMT)
 
-    nextday = (datetime.datetime.strptime(logday, DATEFMT) + datetime.timedelta(days=1)).strftime(DATEFMT)
-    prevday = (datetime.datetime.strptime(logday, DATEFMT) - datetime.timedelta(days=1)).strftime(DATEFMT)
+    context['nextday'] = (context['logday'] + datetime.timedelta(days=1)).strftime(DATEFMT)
+    context['prevday'] = (context['logday'] - datetime.timedelta(days=1)).strftime(DATEFMT)
 
-    traffic_tot = CalculatedTraffic.objects.filter(logday=logday).aggregate(Sum('traffic_in'), Sum('traffic_out'))
-    traffic_list = CalculatedTraffic.objects.filter(logday=logday).order_by('-traffic_out')[:10]
-    return render_to_response('accounting/calculated_traffic_list.html', {'logday': logday, 'nextday': nextday, 'prevday': prevday, 'traffic_list': traffic_list, 'total_in': traffic_tot.values()[0], 'total_out': traffic_tot.values()[1], 'nav_name': 'traffic_by_net'})
+    context['traffic_tot'] = CalculatedTraffic.objects.filter(logday=logday).aggregate(Sum('traffic_in'), Sum('traffic_out'))
+    context['traffic_list'] = CalculatedTraffic.objects.filter(logday=logday).order_by('-traffic_out')[:10]
+    context['traffic_in'] = context['traffic_tot'].values()[0]
+    context['traffic_out'] = context['traffic_tot'].values()[1]
+
+    return render_to_response('accounting/calculated_traffic_list.html', context)
 
 
 def traffic_list(request, logday=''):
@@ -34,35 +44,44 @@ def traffic_list(request, logday=''):
 
     DATEFMT = '%Y-%m-%d'
 
+    context = {}
+    context['nav_name'] = 'traffic_by_ip'
+
     if not logday or logday == 'today':
-        logday = datetime.datetime.today().strftime(DATEFMT)
+        context['logday'] = datetime.datetime.today()
     elif logday == 'yesterday':
-        logday = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime(DATEFMT)
+        context['logday'] = datetime.datetime.today() - datetime.timedelta(days=1)
+    else:
+        context['logday'] = datetime.datetime.strptime(logday, DATEFMT)
 
-    nextday = (datetime.datetime.strptime(logday, DATEFMT) + datetime.timedelta(days=1)).strftime(DATEFMT)
-    prevday = (datetime.datetime.strptime(logday, DATEFMT) - datetime.timedelta(days=1)).strftime(DATEFMT)
+    context['nextday'] = (context['logday'] + datetime.timedelta(days=1)).strftime(DATEFMT)
+    context['prevday'] = (context['logday'] - datetime.timedelta(days=1)).strftime(DATEFMT)
 
-    traffic_tot = Traffic.objects.filter(logday=logday).aggregate(Sum('raw_out_pktlen'), Sum('raw_in_pktlen'))
-    traffic_list = Traffic.objects.filter(logday=logday).values('srcip', 'dstip').annotate(bytes_out=Sum('raw_out_pktlen'), bytes_in=Sum('raw_in_pktlen')).order_by('-bytes_out')[:10]
-    return render_to_response('accounting/traffic_list.html', {'logday': logday, 'nextday': nextday, 'prevday': prevday, 'traffic_list': traffic_list, 'traffic_in': traffic_tot.values()[0], 'traffic_out': traffic_tot.values()[1], 'nav_name': 'traffic_by_ip'})
+    context['traffic_tot'] = Traffic.objects.filter(logday=logday).aggregate(Sum('raw_out_pktlen'), Sum('raw_in_pktlen'))
+    context['traffic_list'] = Traffic.objects.filter(logday=logday).values('srcip', 'dstip').annotate(bytes_out=Sum('raw_out_pktlen'), bytes_in=Sum('raw_in_pktlen')).order_by('-bytes_out')[:10]
+    context['traffic_in'] = context['traffic_tot'].values()[0]
+    context['traffic_out'] = context['traffic_tot'].values()[1]
+
+    return render_to_response('accounting/traffic_list.html', context)
 
 
 def login_list(request):
-    login_tot = Authorization.objects.count()
-    login_ok = Authorization.objects.filter(authresult='ok').count()
-    login_fail = login_tot - login_ok
+    context = {}
+    context['nav_name'] = 'logins'
+    context['login_tot'] = Authorization.objects.count()
+    context['login_ok'] = Authorization.objects.filter(authresult='ok').count()
+    context['login_fail'] = context['login_tot'] - context['login_ok']
+    context['login_list'] = Authorization.objects.values('username', 'authresult').annotate(number_of_logins=Count('username')).order_by('username', 'authresult')
 
-    login_list = Authorization.objects.values('username', 'authresult').annotate(number_of_logins=Count('username')).order_by('username', 'authresult')
-
-    return render_to_response('accounting/login_list.html', {'login_list': login_list, 'login_ok': login_ok, 'login_fail': login_fail, 'nav_name': 'logins'})
+    return render_to_response('accounting/login_list.html', context)
 
 
 def login_user_list(request, username):
+    context = {}
+    context['nav_name'] = 'logins'
+    context['login_tot'] = Authorization.objects.filter(username=username).count()
+    context['login_ok'] = Authorization.objects.filter(username=username).filter(authresult='ok').count()
+    context['login_fail'] = context['login_tot'] - context['login_ok']
+    context['login_list'] = Authorization.objects.filter(username=username).order_by('-logtime')
 
-    login_tot = Authorization.objects.filter(username=username).count()
-    login_ok = Authorization.objects.filter(username=username).filter(authresult='ok').count()
-    login_fail = login_tot - login_ok
-
-    login_list = Authorization.objects.filter(username=username).order_by('-logtime')
-
-    return render_to_response('accounting/login_user_list.html', {'login_list': login_list, 'username': username, 'login_ok': login_ok, 'login_fail': login_fail, 'nav_name': 'logins'})
+    return render_to_response('accounting/login_user_list.html', context)
