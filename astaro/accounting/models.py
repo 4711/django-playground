@@ -109,6 +109,10 @@ class Authorization(models.Model):
     def __unicode__(self):
         return "%s %s" % (self.logtime, self.username)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('login_detail', (), {'username': self.username})
+
     class Meta:
         db_table = u'auth'
         managed = False

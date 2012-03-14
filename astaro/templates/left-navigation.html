@@ -6,17 +6,17 @@
             </a>
         </li>
         <li class="contacts">
-            <a href="/accounting/logins/" title="" {% ifequal nav_name "logins" %} class="active"{% endifequal %}>
+            <a href="{% url accounting_login_index %}" title="" {% ifequal nav_name "logins" %} class="active"{% endifequal %}>
                 <span>Logins</span>
             </a>
         </li>
         <li class="graphs">
-            <a href="/accounting/traffic/" title="" {% ifequal nav_name "traffic_by_ip" %} class="active"{% endifequal %}>
+            <a href="{% url accounting_traffic_index %}" title="" {% ifequal nav_name "traffic_by_ip" %} class="active"{% endifequal %}>
                 <span>Traffic by IP</span>
             </a>
         </li>
         <li class="graphs">
-            <a href="/accounting/calctraffic/" title="" {% ifequal nav_name "traffic_by_net" %} class="active"{% endifequal %}>
+            <a href="{% url accounting_calculated_traffic_index %}" title="" {% ifequal nav_name "traffic_by_net" %} class="active"{% endifequal %}>
                 <span>Traffic by Net</span>
             </a>
         </li>
