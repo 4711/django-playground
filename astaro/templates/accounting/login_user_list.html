@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Login List{% endblock %}
+
+{% block content_title %}
+    {% if login_list %}
+        Logins of user: {{ username}}
+    {% else %}
+        No logins for user: {{ username}}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if login_list %}
+        <div class="widget">
+            <div class="head">
+                <h5 class="iChart8">Logins of user: {{ username}}</h5>
+                <div class="num"><span>Summary:</span>
+                    <a href="#" class="greenNum">{{ login_ok }}</a>
+                    <a href="#" class="redNum">{{ login_fail }}</a></div>
+             </div>
+
+    <table width="70%" cellspacing="0" cellpadding="0" class="tableStatic">
+        <thead><tr><td>Datetime</td><td>Facility</td><td>Login</td></tr></thead>
+        <tbody>
+        {% for login in login_list %}
+            {% ifchanged login.logday %}
+                <tr><td align="left" class="webStatsLink">{{ login.logday }}</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr>
+             {% endifchanged %}
+                <td align="center">{{ login.logtime|date:"H:i:s" }}</td>
+                <td align="center">{{ login.facility }}</td>
+                 <td align="center">{% if login.authresult == 'ok' %}<span class="green">{% else %}<span class="red">{% endif %}
+                  {{login.authresult}}</span></td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content_title %}Dashboard{% endblock %}
+
+
+{% block content %}
+
+<br/>
+<div class="title"><h5>Login Statistics</h5></div>
+<div class="stats">
+    <ul>
+        <li><a title="" class="count grey" href="#">{{ login_ok|add:login_fail }}</a><span>total logins</span></li>
+        <li><a title="" class="count green" href="#">{{ login_ok }}</a><span>successful logins</span></li>
+        <li class="last"><a title="" class="count red" href="#">{{ login_fail }}</a><span>failed logins</span></li>
+    </ul>
+    <div class="fix"/>
+</div>
+<div class="fix"></div>
+
+<br/>
+<div class="title"><h5>Net Usage</h5></div>
+<div class="stats">
+    <ul>
+        <li><a title="" class="count grey" href="#">30.3 GB</a><span>Total Traffic</span></li>
+        <li><a title="" class="count blue" href="#">23.6 GB</a><span>Traffic In</span></li>
+        <li class="last"><a title="" class="count blue" href="#">6.7 GB</a><span>Traffic Out </span></li>
+    </ul>
+    <div class="fix"/>
+</div>
+
+<br/>
+<div class="title"><h5>Packet Rule Violations</h5></div>
+<div class="stats">
+    <ul>
+        <li><a title="" class="count grey" href="#">5634</a><span>Violations</span></li>
+    </ul>
+    <div class="fix"/>
+</div>
+
+{% endblock %}

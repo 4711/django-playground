@@ -1,0 +1,52 @@
+<div class="leftNav">
+    <ul id="menu">
+        <li class="dash">
+            <a href="/" title=""  {% ifequal nav_name "dashboard" %} class="active"{% endifequal %}>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="contacts">
+            <a href="/accounting/logins/" title="" {% ifequal nav_name "logins" %} class="active"{% endifequal %}>
+                <span>Logins</span>
+            </a>
+        </li>
+        <li class="graphs">
+            <a href="/accounting/traffic/" title="" {% ifequal nav_name "traffic_by_ip" %} class="active"{% endifequal %}>
+                <span>Traffic by IP</span>
+            </a>
+        </li>
+        <li class="graphs">
+            <a href="/accounting/calctraffic/" title="" {% ifequal nav_name "traffic_by_net" %} class="active"{% endifequal %}>
+                <span>Traffic by Net</span>
+            </a>
+        </li>
+    <!--
+        <li class="errors">
+            <a href="#" title="" class="exp">
+                <span>Error pages</span>
+                <span class="numberLeft">6</span>
+            </a>
+            <ul class="sub">
+                <li>
+                    <a href="403.html" title="">403 page</a>
+                </li>
+                <li>
+                    <a href="404.html" title="">404 page</a>
+                </li>
+                <li>
+                    <a href="405.html" title="">405 page</a>
+                </li>
+                <li>
+                    <a href="500.html" title="">500 page</a>
+                </li>
+                <li>
+                    <a href="503.html" title="">503 page</a>
+                </li>
+                <li class="last">
+                    <a href="offline.html" title="">Website is offline</a>
+                </li>
+            </ul>
+        </li>
+    -->
+    </ul>
+</div>

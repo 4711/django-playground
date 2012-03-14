@@ -1,0 +1,107 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <!-- CSS: implied media="all" -->
+  <link rel="stylesheet" href="/static/css/main.css?v=2">
+  <link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css' />
+
+  <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
+
+  <!-- All JavaScript at the bottom, except for Modernizr and Respond.
+       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+-->
+   {% include 'scripts.html' %}
+
+</head>
+
+<body>
+    {% include 'top-nav.html' %}
+
+<!-- Header -->
+    <div id="header" class="wrapper">
+        <div class="logo">
+            <a href="/" title="">
+                <img src="/static/images/loginLogo.png" alt="" />
+            </a>
+        </div>
+<!--
+        <div class="middleNav">
+                <ul>
+                    <li class="iMes">
+                        <a href="#" title="">
+                            <span>Support tickets</span>
+                        </a>
+                        <span class="numberMiddle">9</span>
+                    </li>
+                    <li class="iStat">
+                        <a href="#" title="">
+                            <span>Statistics</span>
+                        </a>
+                    </li>
+                    <li class="iUser">
+                        <a href="#" title="">
+                            <span>User list</span>
+                        </a>
+                    </li>
+                    <li class="iOrders">
+                        <a href="#" title="">
+                            <span>Billing panel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+-->
+            <div class="fix"></div>
+        </div>
+
+<!-- Content wrapper -->
+        <div class="wrapper">
+
+
+<!-- Left navigation -->
+            {% include 'left-navigation.html' %}
+
+
+<!-- Content -->
+            <div class="content">
+                <div class="title"><h5>{% block content_title %}Title goes here{% endblock %}</h5></div>
+
+                {% block content %}
+                  <div class="title"><h5>Title goes here</h5></div>
+                {% endblock content %}
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        {% block footer %}
+<!-- Footer -->
+        <footer id="footer">
+            <div class="wrapper">
+                <span>&copy; Copyright 2012. All rights reserved.</span>
+            </div>
+        </footer>
+        {% endblock footer %}
+
+    </body>
+</html>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Login List{% endblock %}
+
+{% block content_title %}Login Statistics{% endblock %}
+
+{% block content %}
+
+        <!-- Statistics -->
+        <div class="stats">
+            <ul>
+                <li><a title="" class="count grey" href="#">{{ login_ok|add:login_fail }}</a><span>total logins</span></li>
+                <li><a title="" class="count green" href="#">{{ login_ok }}</a><span>successful logins</span></li>
+                <li class="last"><a title="" class="count red" href="#">{{ login_fail }}</a><span>failed logins </span></li>
+            </ul>
+            <div class="fix"/>
+        </div>
+
+    {% if not login_list %}
+        <p>No logins found</p>
+    {% else %}
+        <div class="widget">
+            <div id="opened" class="head opened inactive"><h5>User Logins</h5></div>
+            <div class="body" style="display: block;">
+
+        <!-- Statistics
+        <div class="stats">
+            <ul>
+                <li><a title="" class="count grey" href="#">{{ login_ok|add:login_fail }}</a><span>total logins</span></li>
+                <li><a title="" class="count green" href="#">{{ login_ok }}</a><span>successful logins</span></li>
+                <li class="last"><a title="" class="count red" href="#">{{ login_fail }}</a><span>failed logins </span></li>
+            </ul>
+                <div class="fix"/>
+
+        </div>
+         -->
+                <table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
+
+                <thead><tr><td>Username</td><td>Login attempts</td><td>Authorization Result</td></tr></thead>
+
+                <tbody>
+                    {% for login in login_list %}
+                    <tr>
+                        <td align="center"><a href="{{ login.username}}" title="" class="webStatsLink">{{ login.username}}</a></td>
+                        <td align="right">{{login.number_of_logins}}</td>
+                        <td align="center">{% if login.authresult == 'ok' %}<span class="green">{% else %}<span class="red">{% endif %}
+                        {{login.authresult}}</span></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+             </table>
+        </div></div>
+                <div class="fix"/>
+    {% endif %}
+
+{% endblock %}

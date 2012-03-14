@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% block title %}traffic List{% endblock %}
+
+{% block content_title %}Report for: <a href="{{ prevday }}">&nbsp;&laquo;&nbsp;</a>{{ logday }}<a href="{{ nextday }}">&nbsp;&raquo;&nbsp;</a>{% endblock %}
+
+{% block content %}
+
+<!-- Dynamic table -->
+{% if not traffic_list %}
+    <p><h5 class="red">No traffic data available</h5></p>
+{% else %}
+    <!-- Statistics -->
+
+    <div class="stats">
+        <ul>
+            <li><a title="" class="count grey" href="#">{{ traffic_in|add:traffic_out|filesizeformat }}</a><span>total traffic</span></li>
+            <li><a title="" class="count" href="#">{{ traffic_in|filesizeformat }}</a><span>total traffic in</span></li>
+            <li class="last"><a title="" class="count" href="#">{{ traffic_out|filesizeformat }}</a><span>total traffic out</span></li>
+        </ul>
+        <div class="fix"/>
+    </div>
+
+    <div class="widget">
+        <div id="opened" class="head opened inactive"><h5>Traffic by IP</h5></div>
+        <div class="body" style="display: block;">
+
+        <table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
+            <thead><tr>
+                <td>Source IP</td>
+                <td>Source Net</td>
+                <td>Dest IP</td>
+                <td>Dest Net</td>
+                <td>Traffic In</td>
+                <td>Percentage In</td>
+                <td>Traffic Out</td>
+                <td>Percentage Out</td>
+            </tr></thead>
+            <tbody>
+                {% for t in traffic_list %}
+                <tr>
+                    <td align="center">{{ t.srcip }}</a></td>
+                    <td align="center">{{ t.srcnet }}</td>
+                    <td align="center">{{ t.dstip }}</td>
+                    <td align="center">{{ t.dstnet }}</td>
+                    <td align="right">{{ t.bytes_in|filesizeformat }}</td>
+                    <td align="right">{{ t.bytes_in|percentage:traffic_in }}</td>
+                    <td align="right">{{ t.bytes_out|filesizeformat }}</td>
+                    <td align="right">{{ t.bytes_out|percentage:traffic_out }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="fix"/>
+{% endif %}
+
+{% endblock %}
