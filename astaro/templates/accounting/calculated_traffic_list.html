@@ -4,7 +4,7 @@
 
 {% block title %}Calculate Traffic List{% endblock %}
 
-{% block content_title %}Report for: <a href="{{ prevday }}">&nbsp;&laquo;&nbsp;</a>{{ logday }}<a href="{{ nextday }}">&nbsp;&raquo;&nbsp;</a>{% endblock %}
+{% block content_title %}Report for: <a href="{{ prevday }}">&nbsp;&laquo;&nbsp;</a>{{ logday|date:"l, j. F Y" }}<a href="{{ nextday }}">&nbsp;&raquo;&nbsp;</a>{% endblock %}
 
 {% block content %}
 
