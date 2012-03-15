@@ -2,8 +2,13 @@ from django.shortcuts import render_to_response
 from django.db.models import Count, Sum
 from models import Authorization, Traffic, CalculatedTraffic
 
+import logging
+
+logger = logging.getLogger(__name__)
+logger.debug(': logger created')
 
 def dashboard(request):
+    logger.debug(': dashboard')
     context = {}
     context['nav_name'] = 'dashboard'
     context['login_tot'] = Authorization.objects.count()
@@ -14,9 +19,12 @@ def dashboard(request):
 
 
 def calculated_traffic_index(request, logday=''):
+    logger.debug(': log_index')
     import datetime
 
     DATEFMT = '%Y-%m-%d'
+    
+    logger.debug(': calculated_traffic_index')
 
     context = {}
     context['nav_name'] = 'traffic_by_net'
@@ -40,6 +48,7 @@ def calculated_traffic_index(request, logday=''):
 
 
 def traffic_index(request, logday=''):
+    logger.debug(': log_index')
     import datetime
 
     DATEFMT = '%Y-%m-%d'
@@ -66,12 +75,15 @@ def traffic_index(request, logday=''):
 
 
 def login_index(request):
+    logger.debug(': log_index')
     context = {}
     context['nav_name'] = 'logins'
     context['login_tot'] = Authorization.objects.count()
     context['login_ok'] = Authorization.objects.filter(authresult='ok').count()
     context['login_fail'] = context['login_tot'] - context['login_ok']
     context['login_list'] = Authorization.objects.values('username', 'authresult').annotate(number_of_logins=Count('username')).order_by('username', 'authresult')
+    
+    #logger.debug('Logins: %d/%d/%d' % (context['login_tot'], context['login_ok'], context['login_fail']))
 
     return render_to_response('accounting/login_list.html', context)
 

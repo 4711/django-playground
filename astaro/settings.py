@@ -3,6 +3,7 @@ import os
 DIRNAME = os.path.dirname(__file__)
 
 DEBUG = True
+#DEBUG = False 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -138,11 +139,24 @@ INSTALLED_APPS = (
 # more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(pathname)s %(message)s'
+        }    
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'debuglog': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/tmp/debug.log',
+            'maxBytes': 2000,
+            'backupCount': 2,
+            'formatter': 'simple'
         }
     },
     'loggers': {
@@ -153,6 +167,14 @@ LOGGING = {
         },
     }
 }
+
+if DEBUG:
+    LOGGING['loggers'].update(
+        {'astaro': {
+            'handlers': ['debuglog'],
+            'level': 'DEBUG'
+        }}
+    )
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.139.175')   # IP of client!
 
