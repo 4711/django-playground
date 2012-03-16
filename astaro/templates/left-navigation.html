@@ -1,7 +1,7 @@
 <div class="leftNav">
     <ul id="menu">
         <li class="dash">
-            <a href="/" title=""  {% ifequal nav_name "dashboard" %} class="active"{% endifequal %}>
+            <a href="{% url dashboard %}" title=""  {% ifequal nav_name "dashboard" %} class="active"{% endifequal %}>
                 <span>Dashboard</span>
             </a>
         </li>

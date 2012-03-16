@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     #url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^$', redirect_to, {'url': '/user/login'}),
-    url(r'^dashboard$', dashboard),
+    url(r'^dashboard$', dashboard, name='dashboard'),
     url(r'^accounting/', include('accounting.urls')),
     url(r'^user/', include('userauth.urls')),
 )
