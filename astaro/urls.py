@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
-#from accounting.views import dashboard, login_list, login_user_list, traffic_list, calculated_traffic_list
+from django.views.generic.simple import redirect_to
 from accounting.views import dashboard
 
 # Uncomment the next two lines to enable the admin:
@@ -18,7 +18,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^grappelli/', include('grappelli.urls')),
 
-    url(r'^$', dashboard),
+    url(r'^$', redirect_to, {'url': '/user/login'}),
+    url(r'^dashboard$', dashboard),
     url(r'^accounting/', include('accounting.urls')),
     url(r'^user/', include('userauth.urls')),
 )

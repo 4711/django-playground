@@ -21,7 +21,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="/static/css/main.css?v=2">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css?v=2">
   <link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css' />
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
@@ -36,14 +36,16 @@
 </head>
 
 <body>
-    {% include 'top-nav.html' %}
+    {% block top-navigation %}{% include 'top-nav.html' %}{% endblock %}
 
 <!-- Header -->
     <div id="header" class="wrapper">
+{% block header-logo %}
         <div class="logo">
             <a href="/" title="">
-                <img src="/static/images/loginLogo.png" alt="" />
+                <img src="{{ STATIC_URL }}images/loginLogo.png" alt="" />
             </a>
+{% endblock %}
         </div>
 <!--
         <div class="middleNav">
@@ -78,21 +80,23 @@
 <!-- Content wrapper -->
         <div class="wrapper">
 
-
 <!-- Left navigation -->
-            {% include 'left-navigation.html' %}
-
+    {% block left-navigation %}{% include 'left-navigation.html' %}{% endblock %}
 
 <!-- Content -->
-            <div class="content">
-                <div class="title"><h5>{% block content_title %}Title goes here{% endblock %}</h5></div>
 
-                {% block content %}
-                  <div class="title"><h5>Title goes here</h5></div>
-                {% endblock content %}
-            </div>
-            <div class="fix"></div>
-        </div>
+    <div class="content">
+        {% block main_title %}
+        <div class="title"><h5>{% block content_title %}Title goes here{% endblock %}</h5></div>
+        {% endblock %}
+
+        {% block content %}
+          <div class="title"><h5>Title goes here</h5></div>
+        {% endblock content %}
+    </div>
+    <div class="fix"></div>
+</div>
+
 
         {% block footer %}
 <!-- Footer -->

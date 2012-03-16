@@ -3,7 +3,6 @@ import os
 DIRNAME = os.path.dirname(__file__)
 
 DEBUG = True
-#DEBUG = False 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -135,7 +134,7 @@ INSTALLED_APPS = (
 
 LOGIN_URL = '/user/login/'
 LOGOUT_URL = '/user/logout/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -148,7 +147,7 @@ LOGGING = {
     'formatters': {
         'simple': {
             'format': '%(levelname)s %(asctime)s %(pathname)s %(message)s'
-        }    
+        }
     },
     'handlers': {
         'mail_admins': {

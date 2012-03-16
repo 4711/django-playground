@@ -4,7 +4,7 @@
         <div class="wrapper">
             <div class="welcome">
                 <a href="#" title="">
-                    <img src="/static/images/userPic.png" alt="" /></a>
+                    <img src="{{ STATIC_URL }}images/userPic.png" alt="" /></a>
                 <span>{% if user.is_authenticated %}Howdy, {{ user.username }}! {% else%} hi, anonymous{% endif %}</span>
             </div>
             <div class="userNav">
@@ -12,17 +12,17 @@
                     {% if user.is_authenticated %}
                     <li>
                         <a href="#" title="">
-                            <img src="/static/images/icons/topnav/profile.png" alt="" /><span>Profile</span>
+                            <img src="{{ STATIC_URL }}images/icons/topnav/profile.png" alt="" /><span>Profile</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" title="">
-                            <img src="/static/images/icons/topnav/tasks.png" alt="" />
+                            <img src="{{ STATIC_URL }}images/icons/topnav/tasks.png" alt="" />
                             <span>Tasks</span>
                         </a>
                     </li>
                     <li class="dd">
-                        <img src="/static/images/icons/topnav/messages.png" alt="" />
+                        <img src="{{ STATIC_URL }}images/icons/topnav/messages.png" alt="" />
                         <span>Messages</span>
                         <span class="numberTop">8</span>
                         <ul class="menu_body"><li>
@@ -41,20 +41,20 @@
                     </li>
                     <li>
                         <a href="#" title="">
-                            <img src="/static/images/icons/topnav/settings.png" alt="" />
+                            <img src="{{ STATIC_URL }}images/icons/topnav/settings.png" alt="" />
                             <span>Settings</span>
                         </a>
                     </li>
                     <li>
                         <a href="{% url userauth_logout %}" title="">
-                            <img src="/static/images/icons/topnav/logout.png" alt="" />
+                            <img src="{{ STATIC_URL }}images/icons/topnav/logout.png" alt="" />
                             <span>Logout</span>
                         </a>
                     </li>
                     {% else %}
                     <li>
                         <a href="{% url userauth_login %}" title="">
-                            <img src="/static/images/icons/topnav/login.png" alt="" />
+                            <img src="{{ STATIC_URL }}images/icons/topnav/login.png" alt="" />
                             <span>Login</span>
                         </a>
                     </li>
