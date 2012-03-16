@@ -20,4 +20,5 @@ urlpatterns = patterns('',
 
     url(r'^$', dashboard),
     url(r'^accounting/', include('accounting.urls')),
+    url(r'^user/', include('userauth.urls')),
 )

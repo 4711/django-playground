@@ -130,7 +130,12 @@ INSTALLED_APPS = (
     #'gunicorn',
     'debug_toolbar',
     'accounting',
+    'userauth',
 )
+
+LOGIN_URL = '/user/login/'
+LOGOUT_URL = '/user/logout/'
+LOGIN_REDIRECT_URL = '/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -5,10 +5,12 @@
             <div class="welcome">
                 <a href="#" title="">
                     <img src="/static/images/userPic.png" alt="" /></a>
-                <span>{% if user %} Howdy, {{ user }}! {% else%} hi, anonymous{% endif %}</span>
+                <span>{% if user.is_authenticated %}Howdy, {{ user.username }}! {% else%} hi, anonymous{% endif %}</span>
             </div>
             <div class="userNav">
-                <ul><li>
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li>
                         <a href="#" title="">
                             <img src="/static/images/icons/topnav/profile.png" alt="" /><span>Profile</span>
                         </a>
@@ -44,11 +46,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="login.html" title="">
+                        <a href="{% url userauth_logout %}" title="">
                             <img src="/static/images/icons/topnav/logout.png" alt="" />
                             <span>Logout</span>
                         </a>
                     </li>
+                    {% else %}
+                    <li>
+                        <a href="{% url userauth_login %}" title="">
+                            <img src="/static/images/icons/topnav/login.png" alt="" />
+                            <span>Login</span>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="fix"></div>
