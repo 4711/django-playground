@@ -35,6 +35,11 @@
     <div class="loginLogo"><img src="{{ STATIC_URL }}images/loginLogo.png" alt="" /></div>
     <div class="loginPanel">
         <div class="head"><h5 class="iUser">Login</h5></div>
+        {% if form.errors %}
+            <div class="nNote nFailure">
+                <p>Your username or password did not match</p>
+            </div>
+        {% endif %}
         <form action="{% url userauth_login %}"  method="post" accept-charset="utf-8" id="valid" class="mainForm">
             <fieldset>
                 <div class="loginRow">

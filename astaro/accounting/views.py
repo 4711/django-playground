@@ -74,7 +74,7 @@ def traffic_index(request, logday=''):
     context['prevday'] = (context['logday'] - datetime.timedelta(days=1)).strftime(DATEFMT)
 
     context['traffic_tot'] = Traffic.objects.filter(logday=logday).aggregate(Sum('raw_out_pktlen'), Sum('raw_in_pktlen'))
-    context['traffic_list'] = Traffic.objects.filter(logday=logday).values('srcip', 'dstip').annotate(bytes_out=Sum('raw_out_pktlen'), bytes_in=Sum('raw_in_pktlen')).order_by('-bytes_out')[:10]
+    context['traffic_list'] = Traffic.objects.filter(logday=logday).values('srcip', 'dstip').annotate(bytes_out=Sum('raw_out_pktlen'), bytes_in=Sum('raw_in_pktlen')).order_by('-bytes_out')[:50]
     context['traffic_in'] = context['traffic_tot'].values()[0]
     context['traffic_out'] = context['traffic_tot'].values()[1]
 

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load custom_filters %}
+{% load pagination_tags %}
 
 {% block title %}traffic List{% endblock %}
 
@@ -8,11 +9,14 @@
 
 {% block content %}
 
+
+
 <!-- Dynamic table -->
 {% if not traffic_list %}
     <p><h5 class="red">No traffic data available</h5></p>
 {% else %}
     <!-- Statistics -->
+{% autopaginate traffic_list 10 %}
 
     <div class="stats">
         <ul>
@@ -55,6 +59,23 @@
         </table>
     </div>
     <div class="fix"/>
+<ul class="pages">
+                <li class="prev"><a href="#">&lt;</a></li>
+                <li><a href="#" class="active collapse-close">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li>...</li>
+                <li><a href="#">30</a></li>
+                <li class="next"><a href="#">&gt;</a></li>
+            </ul>
+    <div class="fix"/>
+                {% paginate %}
+
 {% endif %}
 
 {% endblock %}

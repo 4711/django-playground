@@ -81,10 +81,10 @@ class Traffic(models.Model):
     flow_count = models.BigIntegerField(verbose_name='Flow Count')
 
     def srcnet(self):
-        return str('Source Net')
+        return u'Source Net'
 
     def dstnet(self):
-        return str('Dest Net')
+        return u'Dest Net'
 
     def __unicode__(self):
         return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
@@ -93,8 +93,8 @@ class Traffic(models.Model):
         db_table = u'accounting'
         managed = False
         verbose_name_plural = u'traffic'
-
-ordering = ['-logday']
+        ordering = ['-logday']
+        permissions = (('view_traffic', 'Can see traffic'),)
 
 
 class Authorization(models.Model):
@@ -116,6 +116,7 @@ class Authorization(models.Model):
     class Meta:
         db_table = u'auth'
         managed = False
+        permissions = (('view_logins', 'Can see logins'),)
 
 
 class Intrusion(models.Model):
@@ -199,3 +200,4 @@ class CalculatedTraffic(models.Model):
     class Meta:
         db_table = u'calctraffic'
         managed = False
+        permissions = (('view_calc_traffic', 'Can see traffic'),)
