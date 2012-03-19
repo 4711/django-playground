@@ -5,7 +5,7 @@
             <div class="welcome">
                 <a href="#" title="">
                     <img src="{{ STATIC_URL }}images/userPic.png" alt="" /></a>
-                <span>{% if user.is_authenticated %}Logged in as {{ user.username }}{% else%}Hi, anonymous{% endif %}</span>
+                <span>{% if user.is_authenticated %}Logged in as {{ user.get_full_name }}, last login {{ user.last_login}}, joined: {{ user.date_joined }}{% else%}Hi, anonymous{% endif %}</span>
             </div>
             <div class="userNav">
                 <ul>
