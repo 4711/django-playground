@@ -1,0 +1,65 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Internal Server Error</title>
+
+    <style type="text/css">
+    html { height: 100%; }
+    * html body { height: 100%; }
+    body { margin: 0; padding: 0; background: url(/static/images/bodyBg.jpg) repeat; font-size: 12px; color: #d5d5d5;
+           font-family: Arial, Helvetica, sans-serif; line-height: 20px; min-height: 100%; position: relative; }
+
+    /* ==========  General styles ========== */
+
+    .wrapper { margin: 0 5%; clear: both; }
+    .img { border: 1px solid #d5d5d5; }
+
+    .red { color: #e0a5a5; }
+
+    /* ===== Error pages  ===== */
+
+    .errorPage { width: 370px; margin: 100px auto 80px auto; position: relative; }
+    .errorPage .errorTitle, .weAreOff { background: url(/static/mages/linesSepLight.png) repeat-x 0 100%; width: 290px; padding-bottom: 15px; }
+    .weAreOff { width: 100% }
+    .errorPage h1 { color: #fafafa; font-size: 140px; margin: 80px 0; position: relative; padding-left: 10px; }
+    .errorPage h2 { font-size: 22px; font-weight: normal;  }
+    .errorPage h2 span { background: url(/static/images/sadEmo.png) no-repeat 0; padding-left: 26px; }
+    .errorPage .bubbles { position: absolute; background: url(/static/images/error.png) no-repeat 0 0; width: 138px; height: 133px; top: -10px; left: 225px; }
+    .errorPage p { width: 100%; padding: 15px 0 13px 0; background: url(/static/images/linesSepLight.png) repeat-x 0 0; font-size: 20px; text-align: center; }
+    .backToDash { text-align: center; margin: 10px; }
+
+    button, .button {
+        font-size: 10px; font-weight: bold; text-transform: uppercase; padding: 7px 14px 7px 14px; cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif; line-height: 12px; border: 1px solid #292d2f;
+        -moz-box-shadow: 0 0 2px #545454; color: #fff;
+        -webkit-box-shadow: 0 0 2px #545454;
+        box-shadow: 0 0 2px #545454;
+    }
+
+    .seaBtn { background: url(/static/images/ui/seaBtn.png) repeat-x 0 0; }
+    .seaBtn:hover { background-position: 0 -27px; }
+    .seaBtn:active { background-position: 0 -54px; }
+
+    </style>
+
+    <link href="http://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <!-- Error info area -->
+    <div class="wrapper">
+        <div class="errorPage">
+            <h2 class="red errorTitle"><span>Something went wrong here</span></h2>
+            <h1>404</h1>
+            <span class="bubbles"></span>
+            <p>Oops! Sorry, page not found.</p>
+            <p>Internal Server Error!</p>
+            <p></p>
+            <div class="backToDash"><a href="/" title="" class="seaBtn button">Back to Home</a></div>
+        </div>
+    </div>
+
+</body>
+</html>
