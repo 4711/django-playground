@@ -4,7 +4,6 @@ from models import *
 
 class TrafficAdmin(admin.ModelAdmin):
     list_display = ('logday', 'srcip', 'dstip', 'port', 'ip_protocol', 'raw_in_pktlen', 'raw_out_pktlen')
-    #ordering = ['-raw_in_pktlen', '-raw_out_pktlen', '-logday']
     list_per_page = 25
     search_fields = ['srcip', 'dstip']
     date_hierarchy = 'logday'
@@ -14,6 +13,7 @@ class TrafficAdmin(admin.ModelAdmin):
         ('Traffic', {'fields': (('raw_in_pktcount', 'raw_in_pktlen'), ('raw_out_pktcount', 'raw_out_pktlen'))}),
         ('Flow', {'fields': (('flow_count', 'flow_duration'),)}),
     )
+    readonly_fields = [field.name for field in Traffic._meta.fields]
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
@@ -23,6 +23,7 @@ class AuthorizationAdmin(admin.ModelAdmin):
     search_fields = ['username']
     date_hierarchy = 'logday'
     list_filter = ('logday', )
+    readonly_fields = [field.name for field in Authorization._meta.fields]
 
 
 class IntrusionAdmin(admin.ModelAdmin):
