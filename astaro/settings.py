@@ -2,8 +2,8 @@
 import os
 DIRNAME = os.path.dirname(__file__)
 
-#DEBUG = True
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     #'gunicorn',
     'debug_toolbar',
     'pagination',
+    'dashboard',
     'accounting',
     'userauth',
 )

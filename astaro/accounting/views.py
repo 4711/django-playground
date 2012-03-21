@@ -10,18 +10,6 @@ logger = logging.getLogger(__name__)
 logger.debug(': logger created')
 
 
-def dashboard(request):
-    logger.debug(': dashboard')
-    context = {}
-    context['nav_name'] = 'dashboard'
-    context['login_tot'] = Authorization.objects.count()
-    context['login_ok'] = Authorization.objects.filter(authresult='ok').count()
-    context['login_fail'] = context['login_tot'] - context['login_ok']
-
-    return render_to_response('dashboard.html', context,
-        context_instance=RequestContext(request))
-
-
 @login_required
 def calculated_traffic_index(request, logday=''):
     logger.debug(': log_index')
