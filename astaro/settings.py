@@ -109,14 +109,13 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    #"django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.core.context_processors.static",
     #"django.core.context_processors.tz",
-		"django.contrib.auth.context_processors.auth",
+    "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages"
 )
 
@@ -201,8 +200,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 )
 
+### DEBUG TOOLBAR
 INTERNAL_IPS = ('127.0.0.1', '192.168.139.175')   # IP of client!
-
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 ### ACTIVE DIRECTORY SETTINGS
@@ -210,5 +209,5 @@ AD_DNS_NAME = 'concrete.fela.ch'
 AD_LDAP_PORT = 389
 AD_SEARCH_DN = 'CN=Users,dc=fela,dc=ch'
 AD_NT4_DOMAIN = 'FELA.CH'
-AD_SEARCH_FIELDS = ['mail','givenName','sn','sAMAccountName']
+AD_SEARCH_FIELDS = ['mail', 'givenName', 'sn', 'sAMAccountName']
 AD_LDAP_URL = 'ldap://%s:%s' % (AD_DNS_NAME, AD_LDAP_PORT)

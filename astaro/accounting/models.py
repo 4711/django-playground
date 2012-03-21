@@ -97,7 +97,6 @@ class Traffic(models.Model):
         return u'Dest Net'
 
 
-
 class Authorization(models.Model):
     id = models.BigIntegerField(primary_key=True, db_column='_rowno')
     logday = models.DateField(verbose_name='Log Day')
@@ -107,17 +106,17 @@ class Authorization(models.Model):
     facility = models.CharField(max_length=20)
     authresult = models.CharField(max_length=20)
 
+    class Meta:
+        db_table = u'auth'
+        managed = False
+        permissions = (('view_logins', 'Can see logins'),)
+
     def __unicode__(self):
         return "%s %s" % (self.logtime, self.username)
 
     @models.permalink
     def get_absolute_url(self):
         return ('login_detail', (), {'username': self.username})
-
-    class Meta:
-        db_table = u'auth'
-        managed = False
-        permissions = (('view_logins', 'Can see logins'),)
 
 
 class Intrusion(models.Model):
@@ -130,12 +129,12 @@ class Intrusion(models.Model):
     alert_packets = models.BigIntegerField()
     drop_packets = models.BigIntegerField()
 
-    def __unicode__(self):
-        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
-
     class Meta:
         db_table = u'ips'
         managed = False
+
+    def __unicode__(self):
+        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
 
 
 class IntrusionCount(models.Model):
@@ -157,12 +156,12 @@ class PacketFilter(models.Model):
     svc = models.CharField(max_length=20, verbose_name='service')
     packets = models.BigIntegerField()
 
-    def __unicode__(self):
-        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
-
     class Meta:
         db_table = u'pfilter'
         managed = False
+
+    def __unicode__(self):
+        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
 
 
 class VpnConnection(models.Model):
@@ -178,12 +177,12 @@ class VpnConnection(models.Model):
     pktlen_in = models.BigIntegerField()
     pktlen_out = models.BigIntegerField()
 
-    def __unicode__(self):
-        return "%s: %s" % (self.logintime, self.username)
-
     class Meta:
         db_table = u'vpn'
         managed = False
+
+    def __unicode__(self):
+        return "%s: %s" % (self.logintime, self.username)
 
 
 class CalculatedTraffic(models.Model):
@@ -195,10 +194,10 @@ class CalculatedTraffic(models.Model):
     traffic_in = models.BigIntegerField()
     traffic_out = models.BigIntegerField()
 
-    def __unicode__(self):
-        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
-
     class Meta:
         db_table = u'calctraffic'
         managed = False
         permissions = (('view_calc_traffic', 'Can see traffic'),)
+
+    def __unicode__(self):
+        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)

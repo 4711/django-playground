@@ -1,6 +1,7 @@
-from django import template 
+from django import template
 
 register = template.Library()
+
 
 @register.filter(name='percentage')
 def percentage(fraction, population):
