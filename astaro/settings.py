@@ -2,8 +2,8 @@
 import os
 DIRNAME = os.path.dirname(__file__)
 
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -203,6 +203,8 @@ AUTHENTICATION_BACKENDS = (
 ### DEBUG TOOLBAR
 INTERNAL_IPS = ('127.0.0.1', '192.168.139.175')   # IP of client!
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
+
+
 
 ### ACTIVE DIRECTORY SETTINGS
 AD_DNS_NAME = 'concrete.fela.ch'

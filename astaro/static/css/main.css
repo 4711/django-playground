@@ -683,6 +683,7 @@ box-shadow: 0 1px 0 #363B3E;
 
 /* ===== Growl notifications ===== */
 
+
 div.jGrowl { z-index: 9999; color: #fff; font-size: 12px; }
 div.ie6.top-right {
 	right: 				auto;
