@@ -80,21 +80,22 @@ class Traffic(models.Model):
     flow_duration = models.IntegerField(verbose_name='Flow Duration')
     flow_count = models.BigIntegerField(verbose_name='Flow Count')
 
-    def srcnet(self):
-        return u'Source Net'
-
-    def dstnet(self):
-        return u'Dest Net'
-
-    def __unicode__(self):
-        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
-
     class Meta:
         db_table = u'accounting'
         managed = False
         verbose_name_plural = u'traffic'
         ordering = ['-logday']
         permissions = (('view_traffic', 'Can see traffic'),)
+
+    def __unicode__(self):
+        return "%s: %s %s" % (self.logday, self.srcip, self.dstip)
+
+    def srcnet(self):
+        return u'Source Net'
+
+    def dstnet(self):
+        return u'Dest Net'
+
 
 
 class Authorization(models.Model):
