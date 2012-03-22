@@ -8,11 +8,17 @@
 {% endblock %}
 
 {% block java-scripts %}
-  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="{{ STATIC_URL }}js/visualize/visualize.jQuery.js"></script>
+  <script src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
   {% load chartit %}
-  <script src="{{ STATIC_URL }}js/themes/gray.js"></script>
+  <script src="{{ STATIC_URL }}js/highcharts/themes/gray.js"></script>
   {{ loginchart|load_charts:"container1" }}
 {% endblock java-scripts %}
+
+{% block jquery-ready %}
+    {{ block.super }}
+    $('table.pie').visualize({type: 'bar', barMargin: 5});
+{% endblock jquery-ready %}
 
 {% block content %}
 
@@ -35,4 +41,18 @@
 
 <div id="container1" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
+
+<br>
+<table class="pie">
+  <caption>Seitenaufrufe pro Jahreszeit</caption>
+  <thead>
+    <tr><td></td><th>Visits</th></tr>
+  </thead>
+  <tbody>
+  <tr><th>Winter</th><td>1100</td></tr>
+  <tr><th>Frühling</th><td>1100</td></tr>
+  <tr><th>Sommer</th><td>866</td></tr>
+  <tr><th>Herbst</th><td>1000</td></tr>
+  </tbody>
+</table>
 {% endblock %}
