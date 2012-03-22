@@ -4,13 +4,21 @@
 
 {% block content_title %}Dashboard{% endblock %}
 
+{% block extra_head %}
+{% endblock %}
+
+{% block java-scripts %}
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  {% load chartit %}
+  <script src="{{ STATIC_URL }}js/themes/gray.js"></script>
+  {{ loginchart|load_charts:"container1" }}
+{% endblock java-scripts %}
 
 {% block content %}
 
-<div class="stats">
+<br>
 <a href="{% url dashboard_search %}">Search</a><br>
-<div/>
-<div class="title"><h5>Login Statistics</h5></div>
+
 <div class="stats">
     <ul>
         <li><a title="" class="count grey" href="#">{{ login_ok|add:login_fail }}</a><span>total logins</span></li>
@@ -19,26 +27,12 @@
     </ul>
     <div class="fix"/>
 </div>
-<div class="fix"></div>
 
-<br/>
-<div class="title"><h5>Net Usage</h5></div>
-<div class="stats">
-    <ul>
-        <li><a title="" class="count grey" href="#">30.3 GB</a><span>Total Traffic</span></li>
-        <li><a title="" class="count blue" href="#">23.6 GB</a><span>Traffic In</span></li>
-        <li class="last"><a title="" class="count blue" href="#">6.7 GB</a><span>Traffic Out </span></li>
-    </ul>
-    <div class="fix"/>
-</div>
+<br>
 
-<br/>
-<div class="title"><h5>Packet Rule Violations</h5></div>
-<div class="stats">
-    <ul>
-        <li><a title="" class="count grey" href="#">5634</a><span>Violations</span></li>
-    </ul>
-    <div class="fix"/>
-</div>
+<div class="title"><h5>Violations</h5></div>
+<br>
+
+<div id="container1" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
 {% endblock %}
