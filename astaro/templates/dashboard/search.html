@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Search{% endblock %}
+
+{% block content_title %}Dashboard - Search{% endblock %}
+
+{% block content %}
+
+<!-- Search -->
+<div class="searchWidget">
+    <form id="search_form" method="get" action="search">
+        {{ form.query }}
+        <input name="find" value="" type="submit">
+    </form>
+</div>
+
+<div class="widget">
+    <div class="head"><h5 class="iImageList">{{ logins.count }} entries found</h5></div>
+    <div class="body">
+        <div id="search-results" class="list plusGrey pt12">
+        {% if show_results %}
+            <ul>
+            {% for login in logins %}
+                <li>
+                    {% ifequal login.authresult "ok"  %}<strong class="green">
+                    {% else %}<strong class="red">
+                    {% endifequal %}
+                    {{ login.number_of_logins }}</strong> logins of user <strong>{{ login.username }}</strong>
+                    {% ifequal login.authresult "ok"  %} were {% endifequal %}{{ login.authresult }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+         </div>
+    </div>
+</div>
+
+{% endblock %}
