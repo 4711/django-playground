@@ -71,6 +71,8 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 #ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 
+ADMIN_TOOLS_MEDIA_URL = '/static/admin-tools/'
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -116,7 +118,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     #"django.core.context_processors.tz",
     "django.contrib.auth.context_processors.auth",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request"
 )
 
 ROOT_URLCONF = 'astaro.urls'
@@ -129,6 +132,10 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

@@ -1,10 +1,23 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-from django.db.models import Count
-from accounting.models import Authorization, IntrusionCount, Traffic
+from django.db.models import Count, Sum
+from accounting.models import Authorization, PacketFilter   # IntrusionCount, Traffic
 from forms import SearchForm
 from chartit import DataPool, Chart
+
+from json import JSONEncoder
+
+
+class JSONEncoder(object):
+    def default(self, o):
+        import datetime
+        if isinstance(o, datetime.date):
+            return o.strftime('%Y-%m-%d')
+        else:
+            return super.default(self, o)
+
+        raise TypeError(repr(o) + " is not JSON serializable")
 
 
 def dashboard(request):
@@ -16,16 +29,18 @@ def dashboard(request):
 
     #Step 1: Create a DataPool with the data we want to retrieve.
     logindata = DataPool(series=[
-      {'options': {'source': IntrusionCount.objects.all()[:10]},
-                   'terms': ['ruleid', 'count']
+      #{'options': {'source': IntrusionCount.objects.all()[:10]},
+      {'options': {'source':  PacketFilter.objects.filter(logday='2012-03-01')[:10]},
+                   'terms': ['logday', 'packets']
       }
     ])
 
     #Step 2: Create the Chart object
     cht1 = Chart(datasource=logindata, series_options=[
-      {'options':{'type': 'line', 'stacking': False}, 'terms':{'ruleid':['count']}}],
+      {'options':{'type': 'spline', 'stacking': False}, 'terms':{'logday':['packets']}}],
       chart_options={'title': {'text': 'Rule Violations'},
-      'xAxis': {'title': {'text': 'Rule-Id'}}}
+      'credits': {'enabled': False},
+      'xAxis': {'title': {'text': 'Day'}}}
     )
     """
     #Step 1: Create a DataPool with the data we want to retrieve.
