@@ -2,7 +2,7 @@
 
 {% block title %}Dashboard - Chart{% endblock %}
 
-{% block content_title %}Dashboard - Chart{% endblock %}
+{% block content_title %}<a href="{{ prevmonth }}">&nbsp;&laquo;&nbsp;</a>{{ year }}/{{ month }}<a href="{{ nextmonth }}">&nbsp;&raquo;&nbsp;</a>{% endblock %}
 
 {% block java-scripts %}
   <script src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
@@ -19,7 +19,7 @@
             spacingRight: 20
         },
         title: {
-            text: 'USD to EUR exchange rate from 2006 through 2008'
+            text: 'Packet Filter'
         },
         subtitle: {
             text: document.ontouchstart === undefined ?
@@ -31,20 +31,22 @@
         },
         xAxis: {
             type: 'datetime',
-            maxZoom: 14 * 24 * 3600000, // fourteen days
+            //maxZoom: 14 * 24 * 3600000, // fourteen days
+            maxZoom: 2 * 24 * 3600000, // 2 days
             title: {
                 text: null
             }
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'Number of Packets'
             },
             min: 0.6,
             startOnTick: false,
             showFirstLabel: false
         },
         tooltip: {
+            crosshairs: true,
             shared: true
         },
         legend: {
@@ -80,10 +82,10 @@
 
         series: [{
             type: 'area',
-            name: 'USD to EUR',
+            name: 'Dropped Packets',
             pointInterval: 24 * 3600 * 1000,
-            pointStart: Date.UTC(2006, 0, 01),
-            data: [{{ data|join:"," }}]
+            pointStart: Date.UTC({{ year }}, {{ month }}, 1),
+            data: [{% for drop in drops %}{{ drop.tot }},{% endfor %}]
         }]
     });
 

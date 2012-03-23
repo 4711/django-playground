@@ -5,6 +5,7 @@ from django.db.models import Count, Sum
 from accounting.models import Authorization, PacketFilter   # IntrusionCount, Traffic
 from forms import SearchForm
 from chartit import DataPool, Chart
+from datetime import date
 
 from json import JSONEncoder
 
@@ -91,9 +92,19 @@ def ajax_autocomplete(request):
     return HttpResponse()
 
 
-def chart_view(request):
+def chart_view(request, year=2012, month=3):
+    DATEFMT = '%Y-%m-01'
+
+    logmonth = date(int(year), int(month), 1)
+
     context = {}
     context['nav_name'] = 'dashboard'
+    context['year'] = int(year)
+    context['month'] = int(month) - 1
+    context['nextmonth'] = date(logmonth.year, logmonth.month + 1, 1).strftime(DATEFMT)
+    context['prevmonth'] = date(logmonth.year, logmonth.month - 1, 1).strftime(DATEFMT)
+
+    context['drops'] = PacketFilter.objects.filter(logday__year=int(year), logday__month=int(month)).values('logday').annotate(tot=Sum('packets')).order_by('logday')[:35]
     context['data'] = [0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
                 0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
                 0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
