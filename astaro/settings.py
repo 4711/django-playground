@@ -149,7 +149,7 @@ INSTALLED_APPS = (
     #'grappelli',
     #'gunicorn',
     'debug_toolbar',
-	'chartit',
+	#'chartit',
     'pagination',
     'dashboard',
     'accounting',

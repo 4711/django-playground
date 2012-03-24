@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.db.models import Count, Sum
-from accounting.models import Authorization, PacketFilter   # IntrusionCount, Traffic
+from accounting.models import Authorization, PacketFilter, Traffic   # IntrusionCount, Traffic
 from forms import SearchForm
 from chartit import DataPool, Chart
 from datetime import date
@@ -28,6 +28,7 @@ def dashboard(request):
     context['login_ok'] = Authorization.objects.filter(authresult='ok').count()
     context['login_fail'] = context['login_tot'] - context['login_ok']
 
+    """
     #Step 1: Create a DataPool with the data we want to retrieve.
     logindata = DataPool(series=[
       #{'options': {'source': IntrusionCount.objects.all()[:10]},
@@ -58,7 +59,6 @@ def dashboard(request):
       'xAxis': {'type': 'datetime',
       'title': {'text': 'Raw Packet Len'}}}
     )
-    """
 
     #Step 3: Send the chart object to the template.
     context['loginchart'] = cht1

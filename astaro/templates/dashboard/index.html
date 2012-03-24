@@ -10,9 +10,9 @@
 {% block java-scripts %}
   <script src="{{ STATIC_URL }}js/visualize/visualize.jQuery.js"></script>
   <script src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
-  {% load chartit %}
+  {# {% load chartit %} #}
   <script src="{{ STATIC_URL }}js/highcharts/themes/gray.js"></script>
-  {{ loginchart|load_charts:"container1" }}
+  {# {{ loginchart|load_charts:"container1" }} #}
 {% endblock java-scripts %}
 
 {% block jquery-ready %}
