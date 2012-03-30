@@ -2,7 +2,7 @@
 
 {% block title %}Dashboard{% endblock %}
 
-{% block content_title %}Dashboard{% endblock %}
+{% block content_title %}Dashboard | <a href="{% url dashboard_search %}">Search</a>{% endblock %}
 
 {% block extra_head %}
 {% endblock %}
@@ -96,9 +96,6 @@
 
 {% block content %}
 
-<br>
-<a href="{% url dashboard_search %}">Search</a> | <a href="chart/2012/03">Traffic</a><br>
-
 <div class="stats">
     <ul>
         <li><a title="" class="count grey" href="#">{{ login_ok|add:login_fail }}</a><span>total logins</span></li>
@@ -114,5 +111,7 @@
 <br>
 <br>
 <div id="chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<br>
+<div class="title"><h5><a href="chart/2012/03">Traffic</a></h5></div>
 
 {% endblock %}
