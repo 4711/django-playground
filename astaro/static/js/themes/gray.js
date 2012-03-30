@@ -10,8 +10,8 @@ Highcharts.theme = {
 		backgroundColor: {
 			linearGradient: [0, 0, 0, 400],
 			stops: [
-				[0, 'rgb(96, 96, 96)'],
-				[1, 'rgb(16, 16, 16)']
+				[0, 'rgb(0, 0, 255)'],
+				[1, 'rgb(255, 0, 0)']
 			]
 		},
 		borderWidth: 0,

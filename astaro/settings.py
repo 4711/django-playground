@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     #'grappelli',
     #'gunicorn',
+    'django_extensions',
     'debug_toolbar',
 	#'chartit',
     'pagination',

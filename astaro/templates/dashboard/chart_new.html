@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Chart{% endblock %}
+
+{% block content_title %}<a href="{{ prevmonth }}">&nbsp;&laquo;&nbsp;</a>{{ year }}/{{ month }}<a href="{{ nextmonth }}">&nbsp;&raquo;&nbsp;</a>{% endblock %}
+
+{% block java-scripts %}
+  <script src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
+  <script src="{{ STATIC_URL }}js/highcharts/themes/gray.js"></script>
+{% endblock java-scripts %}
+
+{% block jquery-ready %}
+    {{ block.super }}
+    {% autoescape off %}
+    {{ chart.render }}
+    {% endautoescape %}
+{% endblock jquery-ready %}
+
+{% block content %}
+
+<br>
+<div id="chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+{% endblock %}
