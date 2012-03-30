@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from django.db.models import Count, Sum
 from accounting.models import Authorization, PacketFilter, Traffic   # IntrusionCount, Traffic
 from forms import SearchForm
-from chartit import DataPool, Chart
 from datetime import date
 
 
@@ -15,40 +14,12 @@ def dashboard(request):
     context['login_ok'] = Authorization.objects.filter(authresult='ok').count()
     context['login_fail'] = context['login_tot'] - context['login_ok']
 
-    """
-    #Step 1: Create a DataPool with the data we want to retrieve.
-    logindata = DataPool(series=[
-      #{'options': {'source': IntrusionCount.objects.all()[:10]},
-      {'options': {'source':  PacketFilter.objects.filter(logday='2012-03-01')[:10]},
-                   'terms': ['logday', 'packets']
-      }
-    ])
+    context['year'] = 2102
+    context['month'] = 2
 
-    #Step 2: Create the Chart object
-    cht1 = Chart(datasource=logindata, series_options=[
-      {'options':{'type': 'spline', 'stacking': False}, 'terms':{'logday':['packets']}}],
-      chart_options={'title': {'text': 'Rule Violations'},
-      'credits': {'enabled': False},
-      'xAxis': {'title': {'text': 'Day'}}}
-    )
-    """
-    #Step 1: Create a DataPool with the data we want to retrieve.
-    logindata = DataPool(series=[
-      {'options': {'source': Traffic.objects.all()[:10]},
-                   'terms': ['logday', 'raw_out_pktlen']
-      }
-    ])
-
-    #Step 2: Create the Chart object
-    cht1 = Chart(datasource=logindata, series_options=[
-      {'options':{'type': 'line', 'stacking': False}, 'terms':{'logday':['raw_out_pktlen']}}],
-      chart_options={'title': {'text': 'Traffic'},
-      'xAxis': {'type': 'datetime',
-      'title': {'text': 'Raw Packet Len'}}}
-    )
-
-    #Step 3: Send the chart object to the template.
-    context['loginchart'] = cht1
+    thismonth = '2012-02-01'
+    nextmonth = '2012-03-01'
+    context['drops'] = PacketFilter.objects.filter(logday__gte=thismonth, logday__lt=nextmonth).values('logday').annotate(tot=Sum('packets')).order_by('logday')[:35]
 
     return render_to_response('dashboard/index.html', context,
         context_instance=RequestContext(request))
@@ -64,7 +35,6 @@ def  search_page(request):
         context['query'] = request.GET['query'].strip()
         if context['query']:
             context['form'] = SearchForm({'query': context['query']})
-            #context['logins'] = Authorization.objects.filter(username__startswith=context['query']).values('username').distinct()
             context['logins'] = Authorization.objects.filter(username__startswith=context['query']).values('username', 'authresult').annotate(number_of_logins=Count('username')).order_by('username', 'authresult')
 
     return render_to_response('dashboard/search.html', context,

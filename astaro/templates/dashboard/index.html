@@ -8,22 +8,96 @@
 {% endblock %}
 
 {% block java-scripts %}
-  <script src="{{ STATIC_URL }}js/visualize/visualize.jQuery.js"></script>
   <script src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
-  {# {% load chartit %} #}
   <script src="{{ STATIC_URL }}js/highcharts/themes/gray.js"></script>
-  {# {{ loginchart|load_charts:"container1" }} #}
 {% endblock java-scripts %}
 
 {% block jquery-ready %}
     {{ block.super }}
-    $('table.pie').visualize({type: 'bar', barMargin: 5});
+    var chart;
+    chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'chart',
+            zoomType: 'x',
+            spacingRight: 20
+        },
+        title: {
+            text: 'Packet Filter'
+        },
+        subtitle: {
+            text: document.ontouchstart === undefined ?
+                'Click and drag in the plot area to zoom in' :
+                'Drag your finger over the plot to zoom in'
+        },
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            type: 'datetime',
+            //maxZoom: 14 * 24 * 3600000, // fourteen days
+            maxZoom: 2 * 24 * 3600000, // 2 days
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Packets'
+            },
+            min: 0.6,
+            startOnTick: false,
+            showFirstLabel: false
+        },
+        tooltip: {
+            crosshairs: false,
+            shared: true
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                    stops: [
+                        [0, Highcharts.getOptions().colors[3]],
+                        [1, 'rgba(2,0,0,0)']
+                    ]
+                },
+                lineWidth: 1,
+                lineColor: Highcharts.getOptions().colors[3],
+                marker: {
+                    enabled: false,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            radius: 5
+                        }
+                    }
+                },
+                shadow: false,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'area',
+            name: 'Dropped Packets',
+            pointInterval: 24 * 3600 * 1000,
+            pointStart: Date.UTC({{ year }}, {{ month|add:-1 }}, 1),
+            data: [{% for drop in drops %}{{ drop.tot }},{% endfor %}]
+        }]
+    });
+
 {% endblock jquery-ready %}
 
 {% block content %}
 
 <br>
-<a href="{% url dashboard_search %}">Search</a> | <a href="chart/2012/03">Chart</a><br>
+<a href="{% url dashboard_search %}">Search</a> | <a href="chart/2012/03">Traffic</a><br>
 
 <div class="stats">
     <ul>
@@ -38,7 +112,7 @@
 
 <div class="title"><h5>Violations</h5></div>
 <br>
-
-<div id="container1" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<br>
+<div id="chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
 {% endblock %}
