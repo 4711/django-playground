@@ -46,7 +46,7 @@
             showFirstLabel: false
         },
         tooltip: {
-            crosshairs: true,
+            crosshairs: false,
             shared: true
         },
         legend: {
@@ -57,11 +57,12 @@
                 fillColor: {
                     linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
                     stops: [
-                        [0, Highcharts.getOptions().colors[0]],
+                        [0, Highcharts.getOptions().colors[3]],
                         [1, 'rgba(2,0,0,0)']
                     ]
                 },
                 lineWidth: 1,
+                lineColor: Highcharts.getOptions().colors[3],
                 marker: {
                     enabled: false,
                     states: {
@@ -96,12 +97,10 @@
             spacingRight: 20
         },
         title: {
-            text: 'Traffic'
+            text: 'Network Traffic'
         },
         subtitle: {
-            text: document.ontouchstart === undefined ?
-                'Click and drag in the plot area to zoom in' :
-                'Drag your finger over the plot to zoom in'
+            text: 'Flowing trough firewall'
         },
         credits: {
             enabled: false
