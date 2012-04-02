@@ -5,6 +5,7 @@ from django.db.models import Count, Sum
 from accounting.models import Authorization, PacketFilter, Traffic   # IntrusionCount, Traffic
 from forms import SearchForm
 from datetime import date
+import paramiko
 
 
 def dashboard(request):
@@ -20,6 +21,18 @@ def dashboard(request):
     thismonth = '2012-02-01'
     nextmonth = '2012-03-01'
     context['drops'] = PacketFilter.objects.filter(logday__gte=thismonth, logday__lt=nextmonth).values('logday').annotate(tot=Sum('packets')).order_by('logday')[:35]
+
+    ################################################################################
+    server, username = ('192.168.139.104', 'root')
+    cmd = "unixcat < livestatus-test/query.txt /var/lib/nagios3/rw/live"
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(server, username=username)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
+    data = ssh_stdout.read()
+    context['live'] = data.split()[2].split(';')
+    ssh.close()
+    ################################################################################
 
     return render_to_response('dashboard/index.html', context,
         context_instance=RequestContext(request))
