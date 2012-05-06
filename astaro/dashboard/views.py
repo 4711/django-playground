@@ -5,6 +5,23 @@ from django.db.models import Count, Sum
 from accounting.models import Authorization, PacketFilter, Traffic   # IntrusionCount, Traffic
 from forms import SearchForm
 from datetime import date
+import paramiko
+
+
+class LiveStatus(object):
+
+    def __init__(self, server, username):
+        self.server = server
+        self.username = username
+        self.ssh = paramiko.SSHClient()
+        self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.ssh.connect(server, username=username)
+
+    def query(self, query):
+        cmd = 'cat <<"EOF" | unixcat /var/lib/nagios3/rw/live\n%s\nResponseHeader: fixed16\nEOF' % query
+        ssh_stdin, ssh_stdout, ssh_stderr = self.ssh.exec_command(cmd)
+        data = ssh_stdout.read()
+        return data
 
 
 def dashboard(request):
@@ -20,6 +37,25 @@ def dashboard(request):
     thismonth = '2012-02-01'
     nextmonth = '2012-03-01'
     context['drops'] = PacketFilter.objects.filter(logday__gte=thismonth, logday__lt=nextmonth).values('logday').annotate(tot=Sum('packets')).order_by('logday')[:35]
+
+    ################################################################################
+    livestatus = LiveStatus('192.168.139.104', 'root')
+    data = livestatus.query("""GET hostgroups
+Filter: name = _arco-ica-automaten
+Columns: num_hosts num_hosts_up num_hosts_down num_hosts_unreach num_hosts_pending num_services num_services_ok num_services_crit num_services_warn num_services_unknown num_services_pending"""
+)
+    context['live'] = data.split()[2].split(';')
+    ################################################################################
+    # server, username = ('192.168.139.104', 'root')
+    # cmd = "unixcat < livestatus-test/query.txt /var/lib/nagios3/rw/live"
+    # ssh = paramiko.SSHClient()
+    # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    # ssh.connect(server, username=username)
+    # ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
+    # data = ssh_stdout.read()
+    # context['live'] = data.split()[2].split(';')
+    # ssh.close()
+    ################################################################################
 
     return render_to_response('dashboard/index.html', context,
         context_instance=RequestContext(request))

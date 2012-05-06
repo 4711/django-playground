@@ -109,9 +109,20 @@
 
 <div class="title"><h5>Violations</h5></div>
 <br>
-<br>
 <div id="chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 <br>
 <div class="title"><h5><a href="chart/2012/03">Traffic</a></h5></div>
+
+<br>
+<div class="title"><h5>Nagios</h5></div>
+
+<div class="stats">
+    <ul>
+        <li><a title="" class="count grey" href="#">{{ live.0 }}</a><span>Arcobaleno Depots</span></li>
+        <li><a title="" class="count green" href="#">{{ live.1 }}</a><span>Depots Up</span></li>
+        <li class="last"><a title="" class="count red" href="#">{{ live.2 }}</a><span>Depots Down</span></li>
+    </ul>
+    <div class="fix"/>
+</div>
 
 {% endblock %}
