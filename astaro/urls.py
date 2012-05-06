@@ -15,8 +15,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^admin_tools/', include('admin_tools.urls')),
-    #url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^$', redirect_to, {'url': '/user/login'}),
     url(r'^dashboard/', include('dashboard.urls')),

@@ -71,7 +71,7 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 #ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 
-ADMIN_TOOLS_MEDIA_URL = '/static/admin-tools/'
+#ADMIN_TOOLS_MEDIA_URL = '/static/admin-tools/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
